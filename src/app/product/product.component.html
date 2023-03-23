@@ -1,3 +1,20 @@
-<h2>Product</h2>
+<div>
+  <img [src]="product.image" [alt]="product.title" height="100">
+  <h2>{{product.title}}</h2>
+  <p>Price: {{product.price | currency:'BYN'}}</p>
 
-<p></p>
+  <button (click)="details=!details"
+  [ngClass]="{
+  'bg-yellow-400': !details,
+  'bg-green-400': details
+  }"
+  >
+    {{details ? 'Hide' : 'Show'}} details
+  </button>
+
+  <div *ngIf="details">
+    <p>{{product.description}}</p>
+    <p>Rate: {{product.rating.rate | number:'2.2-4'}}</p>
+  </div>
+
+</div>
