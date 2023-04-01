@@ -15,6 +15,7 @@ export class AppComponent implements OnInit{
 /*  products: IProduct[] = []*/
   loading = false
   products$: Observable<IProduct[]>   //$ означает, что это стрим
+  term: string = ''
 
   constructor(private productsService: ProductsService) {
   }
