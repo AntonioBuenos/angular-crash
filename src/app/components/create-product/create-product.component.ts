@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ProductsService} from "../../services/products.service";
+import {ModalService} from "../../services/modal.service";
 
 @Component({
   selector: 'app-create-product',
@@ -7,18 +9,35 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./create-product.component.scss']
 })
 export class CreateProductComponent {
-form = new FormGroup({
-  title: new FormControl<string>('', [
-    Validators.required,
-    Validators.minLength(6)
-  ])
-})
 
-  get title(){
-  return this.form.controls.title as FormControl
+  constructor(private productService: ProductsService,
+              private modalService: ModalService) {
   }
 
-  submit(){
+  form = new FormGroup({
+    title: new FormControl<string>('', [
+      Validators.required,
+      Validators.minLength(6)
+    ])
+  })
 
+  get title() {
+    return this.form.controls.title as FormControl
+  }
+
+  submit() {
+    this.productService.create({
+      title: this.form.value.title as string,
+      price: 13.5,
+      description: 'sdg',
+      image: 'https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg',
+      category: 'electronic',
+      rating: {
+        rate: 4.7,
+        count: 1
+      }
+    }).subscribe(() => {
+      this.modalService.close()
+    })
   }
 }
